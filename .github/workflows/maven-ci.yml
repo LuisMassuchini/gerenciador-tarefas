@@ -28,10 +28,10 @@ jobs:
 
       # 2. Configurar o Ambiente Java
       # Instala a versão do Java (JDK) que seu projeto precisa.
-      - name: Configurar JDK 17
+      - name: Configurar JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           cache: maven # Otimiza o build guardando as dependências baixadas
 
