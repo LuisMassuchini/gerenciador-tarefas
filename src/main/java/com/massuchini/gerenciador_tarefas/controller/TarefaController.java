@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class TarefaController {
     }
 
     @PostMapping
-    public ResponseEntity<Tarefa> criarTarefa(@RequestBody Tarefa tarefa) {
+    public ResponseEntity<Tarefa> criarTarefa(@Valid @RequestBody Tarefa tarefa) {
         Tarefa novaTarefa = tarefaService.criarTarefa(tarefa);
         return ResponseEntity.status(201).body(novaTarefa);
     }
@@ -40,7 +41,7 @@ public class TarefaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+    public ResponseEntity<Tarefa> atualizarTarefa(@PathVariable Long id, @Valid @RequestBody Tarefa tarefa) {
         try {
             Tarefa tarefaAtualizada = tarefaService.atualizarTarefa(id, tarefa);
             return ResponseEntity.ok(tarefaAtualizada);
@@ -58,4 +59,5 @@ public class TarefaController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-}}
+    }
+}

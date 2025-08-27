@@ -43,10 +43,7 @@ public class TarefaService {
     }
 
     public void deletarTarefa(Long id) {
-        if(!tarefaRespository.existsById(id)) {
-            throw new RuntimeException("Tarefa não encontrada com id: " + id);
-        }
-        tarefaRespository.deleteById(id);
+        Tarefa tarefa = buscarPorId(id);
+        tarefaRespository.delete(tarefa);
     }
-
 }

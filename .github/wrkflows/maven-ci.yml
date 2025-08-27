@@ -1,0 +1,43 @@
+# O nome do seu fluxo de trabalho. É o que aparecerá na aba "Actions" do GitHub.
+name: CI com Maven
+
+# O gatilho (trigger) que inicia o workflow.
+on:
+  # Iniciar sempre que houver um 'push' para a branch 'main' ou 'master'.
+  push:
+    branches: [ "main", "master" ]
+  # Também iniciar quando um Pull Request for aberto para a branch 'main' ou 'master'.
+  pull_request:
+    branches: [ "main", "master" ]
+  # Permite que você inicie o workflow manualmente na interface do GitHub.
+  workflow_dispatch:
+
+# Define os "trabalhos" (jobs) que serão executados.
+jobs:
+  # Estamos definindo um único job chamado 'build-and-test'.
+  build-and-test:
+    # A máquina virtual que o GitHub usará para rodar o job.
+    runs-on: ubuntu-latest
+
+    # A sequência de passos que o job executará.
+    steps:
+      # 1. Checkout do Código
+      # Baixa o código do seu repositório para a máquina virtual.
+      - name: Checkout do código
+        uses: actions/checkout@v4
+
+      # 2. Configurar o Ambiente Java
+      # Instala a versão do Java (JDK) que seu projeto precisa.
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven # Otimiza o build guardando as dependências baixadas
+
+      # 3. Rodar o Build e os Testes
+      # Executa o comando do Maven para compilar, testar e empacotar o projeto.
+      # O comando 'clean install' garante um build limpo e executa os testes.
+      # O argumento '-B' executa o Maven em "batch mode" (não interativo), ideal para automação.
+      - name: Build e Teste com Maven
+        run: mvn -B clean install

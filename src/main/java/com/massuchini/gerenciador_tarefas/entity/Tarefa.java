@@ -1,8 +1,8 @@
 package com.massuchini.gerenciador_tarefas.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -12,7 +12,7 @@ public class Tarefa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @NotBlank(message = "Titulo é obrigatório")
     @Column(nullable = false)
     private String titulo;
 
@@ -64,7 +64,6 @@ public class Tarefa {
     public void setStatus(StatusTarefa status) {
         this.status = status;
     }
-
 
     public LocalDateTime getDataCriacao() {
         return dataCriacao;
